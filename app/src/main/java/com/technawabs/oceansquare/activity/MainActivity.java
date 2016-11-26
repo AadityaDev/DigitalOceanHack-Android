@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int currentId = view.getId();
-
         switch (currentId) {
             case R.id.loginBtn:
                 sendRequest();

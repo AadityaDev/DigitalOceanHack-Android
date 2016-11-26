@@ -1,5 +1,6 @@
 package com.technawabs.oceansquare.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +43,8 @@ public class BrowserActivity extends AppCompatActivity {
             userStore.saveToken(jsonObject.getString(Constant.AUTH_TOKEN));
             userStore.saveName(infoDetails.getString(Constant.NAME));
             userStore.saveEmail(infoDetails.getString(Constant.EMAIL));
+            Intent intent = new Intent(BrowserActivity.this, ChatActivity.class);
+            startActivity(intent);
         }
     }
 
