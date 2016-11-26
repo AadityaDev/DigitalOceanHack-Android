@@ -87,7 +87,6 @@ public class ChatActivity extends AppCompatActivity implements AdapterView.OnIte
         String requestUrl = temp + "create%20droplet";
 
         StringRequest strReq = new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
-
             @Override
             public void onResponse(@NonNull String response) {
                 try {
