@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.technawabs.oceansquare.R;
 import com.technawabs.oceansquare.constant.API;
+import com.technawabs.oceansquare.constant.Constant;
+import com.technawabs.oceansquare.prefrences.UserStore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +37,17 @@ public class BrowserActivity extends AppCompatActivity {
             Element link = doc.select("pre").first();
             String finaltext = link.text();
             JSONObject jsonObject = new JSONObject(finaltext);
-            Toast.makeText(BrowserActivity.this, jsonObject.getString("access_token"), Toast.LENGTH_SHORT).show();
+            JSONObject infoDetails = jsonObject.getJSONObject("info");
+
+            Toast.makeText(BrowserActivity.this, jsonObject.getString(Constant.AUTH_TOKEN), Toast.LENGTH_SHORT).show();
+            Toast.makeText(BrowserActivity.this, infoDetails.getString("name"), Toast.LENGTH_SHORT).show();
+
+            UserStore userStore = new UserStore(this);
+            userStore.saveToken(jsonObject.getString(Constant.AUTH_TOKEN));
+            userStore.saveName(infoDetails.getString("name"));
+            userStore.saveEmail(infoDetails.getString("email"));
+
+
         }
     }
 
@@ -42,6 +55,9 @@ public class BrowserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         browser = (WebView) findViewById(R.id.webview);
         browser.setWebViewClient(new MyBrowser());
