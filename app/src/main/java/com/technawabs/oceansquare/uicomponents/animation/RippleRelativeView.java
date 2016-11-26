@@ -294,11 +294,6 @@ public class RippleRelativeView extends RelativeLayout{
         return output;
     }
 
-    /**
-     * Set Ripple color, default is #FFFFFF
-     *
-     * @param rippleColor New color resource
-     */
     public void setRippleColor(int rippleColor) {
         this.rippleColor = getResources().getColor(rippleColor);
     }

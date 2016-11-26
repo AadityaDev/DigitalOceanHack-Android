@@ -8,10 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-/**
- * Created by piyush.aggarwal on 26-11-2016.
- */
-
 public class SingeltonRequest extends Application {
 
     public static final String TAG = SingeltonRequest.class
