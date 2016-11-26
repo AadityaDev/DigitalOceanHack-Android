@@ -29,13 +29,6 @@
                 android:layout_marginTop="@dimen/dimen_16dp" />
 
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/os_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/region_spinner"
-                android:layout_marginTop="@dimen/dimen_16dp" />
-
-            <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/size_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,6 +53,14 @@
                     android:textSize="@dimen/dimen_18sp"
                     />
             </com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView>
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/os_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/region_spinner"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
         </com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView>
 
