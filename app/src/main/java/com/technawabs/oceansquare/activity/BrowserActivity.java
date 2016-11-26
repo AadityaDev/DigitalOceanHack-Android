@@ -1,9 +1,7 @@
 package com.technawabs.oceansquare.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -24,15 +22,13 @@ import org.jsoup.nodes.Element;
 
 public class BrowserActivity extends AppCompatActivity {
 
-    WebView browser;
-
+    private WebView browser;
 
     @JavascriptInterface
     public void processHTML(String html) throws JSONException {
         if (html == null)
             return;
         else {
-
             Document doc = Jsoup.parse(html);
             Element link = doc.select("pre").first();
             String finaltext = link.text();
@@ -40,14 +36,12 @@ public class BrowserActivity extends AppCompatActivity {
             JSONObject infoDetails = jsonObject.getJSONObject("info");
 
             Toast.makeText(BrowserActivity.this, jsonObject.getString(Constant.AUTH_TOKEN), Toast.LENGTH_SHORT).show();
-            Toast.makeText(BrowserActivity.this, infoDetails.getString("name"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(BrowserActivity.this, infoDetails.getString(Constant.NAME), Toast.LENGTH_SHORT).show();
 
             UserStore userStore = new UserStore(this);
             userStore.saveToken(jsonObject.getString(Constant.AUTH_TOKEN));
-            userStore.saveName(infoDetails.getString("name"));
-            userStore.saveEmail(infoDetails.getString("email"));
-
-
+            userStore.saveName(infoDetails.getString(Constant.NAME));
+            userStore.saveEmail(infoDetails.getString(Constant.EMAIL));
         }
     }
 
