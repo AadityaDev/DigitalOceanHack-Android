@@ -1,34 +1,38 @@
 package com.technawabs.oceansquare.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.technawabs.oceansquare.R;
 import com.technawabs.oceansquare.adapter.RecyclerViewAdapter;
+import com.technawabs.oceansquare.constant.API;
 import com.technawabs.oceansquare.model.ReceiverMessage;
 import com.technawabs.oceansquare.model.SenderMessage;
+import com.technawabs.oceansquare.pojo.CreateDroplet;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
 
-
+    private final String TAG = this.getClass().getSimpleName();
     ArrayList<Object> arrayList;
     RecyclerViewAdapter recyclerViewAdapter;
     RecyclerView recyclerView;
@@ -62,8 +66,7 @@ public class ChatActivity extends AppCompatActivity {
                 arrayList.add(new SenderMessage(editText.getText().toString(), myPhoto));
                 recyclerViewAdapter.notifyDataSetChanged();
                 getReplyFromBot(editText.getText().toString());
-                editText.setText("");
-                recyclerView.smoothScrollToPosition(arrayList.size() - 1);
+
             }
         });
         if (getIntent().getBooleanExtra("EXIT", false)) {
@@ -71,42 +74,40 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public void getReplyFromBot(String senderMessage) {
+    public void getReplyFromBot(@NonNull String senderMessage) {
+        String temp = API.SEARCH_QUERY;
+        String requestUrl = temp + "create droplet";
 
-        String temp = "http://api.program-o.com/v2/chatbot/?bot_id=10&say=" + senderMessage + "&convo_id=exampleusage_1209932&format=json";
-        temp = temp.replaceAll(" ", "%20");
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, temp
-                , null, new Response.Listener<JSONObject>() {
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                requestUrl, new Response.Listener<String>() {
 
             @Override
-            public void onResponse(JSONObject response) {
-
+            public void onResponse(String response) {
                 try {
-                    String responseMessage = response.getString("botsay");
-                    arrayList.add(new ReceiverMessage(responseMessage));
+                    Log.d(TAG, response.toString());
+                    Toast.makeText(ChatActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    CreateDroplet createDroplet = new CreateDroplet();
+                    Gson gson = new Gson();
+                    createDroplet = gson.fromJson(jsonObject.toString(), CreateDroplet.class);
+                    arrayList.add(createDroplet);
                     recyclerViewAdapter.notifyDataSetChanged();
-                    recyclerView.smoothScrollToPosition(arrayList.size() - 1);
 
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage() != null ? e.getMessage() : "JSON Exception");
                 }
-
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                // hide the progress dialog
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
         });
 
 
-        Volley.newRequestQueue(this).add(jsonObjReq);
+        Volley.newRequestQueue(this).add(strReq);
     }
 
 

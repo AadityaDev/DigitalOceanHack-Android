@@ -7,18 +7,21 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16dp"
         android:padding="@dimen/dimen_2dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/dimen_6dp">
 
-        <com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <EditText
                 android:id="@+id/droplet_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="dsdsd"
+                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/dimen_16dp" />
 
             <android.support.v7.widget.AppCompatSpinner
@@ -35,34 +38,34 @@
                 android:layout_below="@+id/os_spinner"
                 android:layout_marginTop="@dimen/dimen_16dp" />
 
-            <com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView
+            <RelativeLayout
                 android:id="@+id/create_droplet"
                 android:layout_width="@dimen/dimen_120dp"
                 android:layout_height="@dimen/dimen_48dp"
-                android:gravity="center"
-                android:layout_below="@+id/size_spinner"
-                android:layout_marginBottom="@dimen/dimen_16dp">
+                android:layout_below="@+id/os_spinner"
+                android:layout_marginBottom="@dimen/dimen_16dp"
+                android:gravity="center">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dimen_12dp"
                     android:text="@string/create"
-                    android:textStyle="bold"
-                    android:layout_centerInParent="true"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/dimen_18sp"
-                    />
-            </com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView>
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/os_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/region_spinner"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/region_spinner" />
 
-        </com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 </android.support.design.widget.CoordinatorLayout>

@@ -13,7 +13,6 @@ public class ViewHolderReceive extends RecyclerView.ViewHolder {
     private TextView receivedMessage;
     private ImageView imageReceiver;
 
-
     public ViewHolderReceive(View itemView) {
         super(itemView);
         receivedMessage = (TextView) itemView.findViewById(R.id.messageReceiver);
