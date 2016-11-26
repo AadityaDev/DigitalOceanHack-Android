@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.technawabs.oceansquare.R;
 
-
 public class ViewHolderReceive extends RecyclerView.ViewHolder {
 
     private TextView receivedMessage;

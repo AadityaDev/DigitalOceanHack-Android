@@ -1,71 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen_16dp"
+    android:background="#00BCD4"
+    android:padding="@dimen/dimen_4dp"
+    app:cardCornerRadius="@dimen/dimen_6dp">
 
-    <android.support.v7.widget.CardView
+    <com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_16dp"
-        android:padding="@dimen/dimen_2dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/dimen_6dp">
+        android:padding="@dimen/dimen_12dp">
 
-        <RelativeLayout
+        <EditText
+            android:id="@+id/droplet_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:hint="Name of droplet"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
-            <EditText
-                android:id="@+id/droplet_name"
+        <Spinner
+            android:id="@+id/region_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/droplet_name"
+            android:layout_marginTop="@dimen/dimen_16dp" />
+
+        <Spinner
+            android:id="@+id/os_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/region_spinner"
+            android:layout_marginTop="@dimen/dimen_16dp" />
+
+        <Spinner
+            android:id="@+id/size_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/os_spinner"
+            android:layout_marginTop="@dimen/dimen_16dp" />
+
+        <com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView
+            android:id="@+id/create_droplet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/size_spinner"
+            android:gravity="center">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="dsdsd"
-                android:textColor="@color/black"
-                android:layout_marginTop="@dimen/dimen_16dp" />
+                android:layout_centerInParent="true"
+                android:padding="@dimen/dimen_12dp"
+                android:text="@string/create"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dimen_18sp"
+                android:textStyle="bold" />
+        </com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView>
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/region_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/droplet_name"
-                android:layout_marginTop="@dimen/dimen_16dp" />
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/size_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/os_spinner"
-                android:layout_marginTop="@dimen/dimen_16dp" />
+    </com.technawabs.oceansquare.uicomponents.animation.RippleRelativeView>
 
-            <RelativeLayout
-                android:id="@+id/create_droplet"
-                android:layout_width="@dimen/dimen_120dp"
-                android:layout_height="@dimen/dimen_48dp"
-                android:layout_below="@+id/os_spinner"
-                android:layout_marginBottom="@dimen/dimen_16dp"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="@dimen/dimen_12dp"
-                    android:text="@string/create"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/dimen_18sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/os_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/region_spinner" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v7.widget.CardView>

@@ -6,14 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.technawabs.oceansquare.R;
 import com.technawabs.oceansquare.model.ReceiverMessage;
 import com.technawabs.oceansquare.model.SenderMessage;
 import com.technawabs.oceansquare.pojo.CreateDroplet;
+import com.technawabs.oceansquare.uicomponents.SingleChoiceAdapter;
 import com.technawabs.oceansquare.viewholder.ViewHolderCreateDroplet;
 import com.technawabs.oceansquare.viewholder.ViewHolderReceive;
 import com.technawabs.oceansquare.viewholder.ViewHolderSend;
@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 break;
             case 2:
                 view = inflater.inflate(R.layout.droplet_create_option, parent, false);
-                viewHolder = new ViewHolderCreateDroplet(view);
+                viewHolder = new ViewHolderCreateDroplet(mContext, view);
                 break;
             default:
                 viewHolder = null;
@@ -117,24 +117,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    private void configureViewCreateDroplet(@NonNull ViewHolderCreateDroplet viewHolder, int position) {
+    private void configureViewCreateDroplet(@NonNull final ViewHolderCreateDroplet viewHolder, final int position) {
         final CreateDroplet createDroplet = (CreateDroplet) items.get(position);
         if (createDroplet != null) {
 
-            ArrayAdapter<String> dataAdapterRegion = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, createDroplet.getRegion());
-            ArrayAdapter<String> dataAdapterImage = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, createDroplet.getImages());
-            ArrayAdapter<String> dataAdapterSize = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, createDroplet.getSize());
+            SingleChoiceAdapter regionAdapter = new SingleChoiceAdapter(mContext, createDroplet.getRegion().toArray(new String[createDroplet.getRegion().size()]));
+            SingleChoiceAdapter sizeAdapter = new SingleChoiceAdapter(mContext, createDroplet.getSize().toArray(new String[createDroplet.getSize().size()]));
+            SingleChoiceAdapter osAdapter = new SingleChoiceAdapter(mContext, createDroplet.getImages().toArray(new String[createDroplet.getImages().size()]));
 
-            viewHolder.getOsSpinner().setAdapter(dataAdapterImage);
-            dataAdapterImage.notify();
-            viewHolder.getRegionSpinner().setAdapter(dataAdapterRegion);
-            dataAdapterRegion.notify();
-            viewHolder.getSizeSpinner().setAdapter(dataAdapterSize);
-            dataAdapterSize.notify();
+            viewHolder.getOsSpinner().setAdapter(regionAdapter);
+            viewHolder.getRegionSpinner().setAdapter(sizeAdapter);
+            viewHolder.getSizeSpinner().setAdapter(osAdapter);
             viewHolder.getSubmitButton().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    CreateDroplet postDroplet = new CreateDroplet();
+                    if ((viewHolder.getName().getText() != null) && (viewHolder.getName().getText().toString() != null)) {
+                        postDroplet.setName(viewHolder.getName().toString());
+                        List<String> osLisr=new ArrayList<String>();
+                        osLisr.add(viewHolder.getOsSpinner().getItemAtPosition(position).toString());
+                        postDroplet.setImages(osLisr);
+                        List<String> images=new ArrayList<String>();
+                        images.add(viewHolder.getSizeSpinner().getItemAtPosition(position).toString());
+                        postDroplet.setSize(images);
+                        List<String> regions=new ArrayList<String>();
+                        regions.add(viewHolder.getRegionSpinner().getItemAtPosition(position).toString());
+                        postDroplet.setRegion(regions);
 
+                        
+
+                    }else {
+                        Toast.makeText(mContext,"Please enter a name",Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }

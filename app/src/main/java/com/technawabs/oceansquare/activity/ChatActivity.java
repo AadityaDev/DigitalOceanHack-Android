@@ -1,6 +1,7 @@
 package com.technawabs.oceansquare.activity;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,19 +30,25 @@ import com.technawabs.oceansquare.pojo.CreateDroplet;
 
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private final String TAG = this.getClass().getSimpleName();
     ArrayList<Object> arrayList;
     RecyclerViewAdapter recyclerViewAdapter;
     RecyclerView recyclerView;
 
+    private HttpURLConnection httpURLConnection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,39 +84,42 @@ public class ChatActivity extends AppCompatActivity {
 
     public void getReplyFromBot(@NonNull String senderMessage) {
         String temp = API.SEARCH_QUERY;
-        String requestUrl = temp + "create droplet";
+        String requestUrl = temp + "create%20droplet";
 
-        StringRequest strReq = new StringRequest(Request.Method.GET,
-                requestUrl, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.GET, requestUrl, new Response.Listener<String>() {
 
             @Override
-            public void onResponse(String response) {
+            public void onResponse(@NonNull String response) {
                 try {
-                    Log.d(TAG, response.toString());
                     Toast.makeText(ChatActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                     JSONObject jsonObject = new JSONObject(response);
-
                     CreateDroplet createDroplet = new CreateDroplet();
                     Gson gson = new Gson();
                     createDroplet = gson.fromJson(jsonObject.toString(), CreateDroplet.class);
                     arrayList.add(createDroplet);
                     recyclerViewAdapter.notifyDataSetChanged();
-
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage() != null ? e.getMessage() : "JSON Exception");
                 }
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
         });
-
-
         Volley.newRequestQueue(this).add(strReq);
+
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }
