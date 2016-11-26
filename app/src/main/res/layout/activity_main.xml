@@ -32,14 +32,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ocean"
+                android:text="@string/ocean"
                 android:textSize="30sp" />
 
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/firstqr" />
+                android:src="@drawable/firstqr"
+                tools:ignore="RtlHardcoded"
+                android:contentDescription="" />
         </LinearLayout>
 
         <Button
@@ -49,7 +51,7 @@
             android:layout_marginTop="35dp"
             android:background="@color/colorDark"
             android:padding="15dp"
-            android:text="Login To Digital Ocean"
+            android:text="@string/login_to_digital_ocean"
             android:textColor="#fff" />
 
     </LinearLayout>

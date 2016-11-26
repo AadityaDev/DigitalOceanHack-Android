@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OceanSquare</string>
+    <string name="login_to_digital_ocean">Login To Digital Ocean</string>
+    <string name="ocean">Ocean</string>
 </resources>
